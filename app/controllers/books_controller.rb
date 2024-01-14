@@ -1,26 +1,42 @@
 class BooksController < ApplicationController
-  
-  def new
-    @list = Book.new
-  end
-  
-  def create
-    list = Book.new(list.params)
-    list.save
-    redirect_to '/top'
 
+
+  def create
+    @book = Book.new(book_params)
+    if @book.save
+      redirect_to book_path(@book.id), notice: 'An error occurred because it was blank'
+    else
+     render :new
+    end
   end
+
   def index
-    @lists = Book.all
+    @books = Book.all
+    @new_book = Book.new
   end
 
   def show
+    @book = Book.find(params[:id])
   end
 
   def edit
+    @book = Book.find(params[:id])
   end
+
+  def update
+    book = Book.find(params[:id])
+    book.update(book_params)
+    redirect_to book_path(book.id)
+  end
+
+  def destroy
+    book = Book.find(params[:id])
+    book.destroy
+    redirect_to '/books'
+  end
+
   private
-  def list_params
-    params.require(:list).permit(:title, :body)
+  def book_params
+    params.require(:book).permit(:title, :body)
   end
-end
+ end
