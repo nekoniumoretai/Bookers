@@ -1,12 +1,14 @@
 class BooksController < ApplicationController
 
-
   def create
-    @book = Book.new(book_params)
-    if @book.save
-      redirect_to book_path(@book.id), notice: 'An error occurred because it was blank'
+    @new_book = Book.new(book_params)
+    if @new_book.save
+      flash[:notice] = "Your post was submitted successfully"
+      redirect_to book_path(@new_book.id)
     else
-     render :new
+      @books = Book.all
+      flash.now[:notice]
+      render :index
     end
   end
 
@@ -25,13 +27,20 @@ class BooksController < ApplicationController
 
   def update
     book = Book.find(params[:id])
-    book.update(book_params)
-    redirect_to book_path(book.id)
+    if book.update(book_params)
+       flash[:notice] = "Update was completed successfully"
+      redirect_to book_path(book.id)
+    else
+      @book = Book.find(params[:id])
+      flash.now[:notice]
+      render :edit
+    end
   end
 
   def destroy
     book = Book.find(params[:id])
     book.destroy
+    flash[:notice] = "Delection was completed successfully"
     redirect_to '/books'
   end
 

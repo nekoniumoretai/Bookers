@@ -13,3 +13,20 @@
  *= require_tree .
  *= require_self
  */
+
+/* スタイルの追加例 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+table {
+  width: 80%;
+  margin-bottom: 20px;
+}
+
+thead th, tbody td {
+  padding: 3px;
+  text-align: left;
+}
