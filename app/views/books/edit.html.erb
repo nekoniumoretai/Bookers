@@ -1,10 +1,15 @@
+<div>
+  <%= flash.now[:notice] %>
+</div>
+
 <h1>Editing Book</h1>
+
 <% if @book.errors.any? %>
   <%= @book.errors.count %>errors occurred.
   <ul>
     <% @book.errors.full_messages.each do |message| %>
       <li><%= message %></li>
-    <% end %>
+  <% end %>
   </ul>
 <% end %>
 
